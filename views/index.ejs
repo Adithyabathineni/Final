@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juice Shop</title>
+    <link rel="stylesheet" href="styles.css">
+   
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="Images/logo.jpg" alt="Logo">
+        </div>
+        <% if (isLoginButton) { %>
+            <div class="login">
+                <button id="login-button"  onclick="window.location.href='/login'">Login</button>
+            </div>
+        <% } else { %>
+            <div class="login">
+                <button onclick="window.location.href='/logout'">Logout</button>
+            </div>
+        <% } %>
+    </header>
+    <% if (isUser) { %>
+        <nav>
+            <ul>
+                <li><a href="/orders">Orders</a></li>
+            </ul>
+        </nav>
+        <% if (allOrders) { %>
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Serial No</th>
+                        <th>Student Name</th>
+                        <th>Student Number</th>
+                        <th>Mango Qty</th>
+                        <th>Berry Qty</th>
+                        <th>Apple Qty</th>
+                        <th>Subtotal</th>
+                        <th>Tax</th>
+                        <th>Total Cost</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                    <% for (let i = 0; i < orders.length; i++) { %>
+                        <tr>
+                            <td><%= i + 1 %></td>
+                            <td><%= orders[i].studentname %></td>
+                            <td><%= orders[i].studentid %></td>
+                            <td><%= orders[i].mjuice %></td>
+                            <td><%= orders[i].bjuice %></td>
+                            <td><%= orders[i].ajuice %></td>
+                            <td><%= orders[i].subtotal %></td>
+                            <td><%= orders[i]. tax %></td>
+                            <td><%= orders[i]. total%></td>
+                            <td><a href="/delete/<%=orders[i]._id %>" >Delete</button></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <% } else { %>
+            <div class="container">
+                Welcome to DashBoard
+            </div>
+        <% } %>
+    <% } %>
+    <div class="container">
+        <% if (isError) { %>
+           <div class="error">
+                <p>Error: <%= error %></p>
+            </div>
+            <% } %>
+           
+        
+        <% if (orderForm) { %>
+        <h2>Welcome to Juice Shop</h2>
+        <form action="/orderPlaced" method="post">
+            <div id="product-list">
+                <div class="product">
+                    <img src="Images/mango.jpg" alt="Mango Juice">
+                    <h3>Mango Juice</h3>
+                    <p>$6.99 each</p>
+                    <input type="number" id="mangoQuantity" name="mangoQuantity" placeholder="Quantity" min="0">
+                </div>
+                <div class="product">
+                    <img src="Images/berry.jpeg" alt="Berry Juice">
+                    <h3>Berry Juice</h3>
+                    <p>$5.99 each</p>
+                    <input type="number" id="berryQuantity" name="berryQuantity" placeholder="Quantity" min="0">
+                </div>
+                <div class="product">
+                    <img src="Images/apple.jpg" alt="Apple Juice">
+                    <h3>Apple Juice</h3>
+                    <p>$3.99 each</p>
+                    <input type="number" id="appleQuantity" name="appleQuantity" placeholder="Quantity" min="0">
+                </div>
+            </div>
+            
+            <div id="cart">
+                <h3>Cart</h3>
+                <ul id="cart-items">
+                </ul>
+                <label for="student-name">Student Name:</label>
+                <input type="text" id="student-name" name="studentName" >
+                <label for="student-id">Student ID:</label>
+                <input type="text" id="student-id" name="studentID" >
+                <button type="submit">Login</button>
+            </div>
+        </form>
+        <% } %>
+    <% if (isLoginForm) { %>
+        <form action="/login" method="post">
+            <div id="login">
+               
+                <h3>Enter your credentials</h3>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Login</button>
+            </div>
+        </form>
+        <% } %>
+        <% if (isOrder) { %>
+            
+            <% if (order && Object.keys(order).length > 0) { %>
+                <div class="order-container">
+                    <h3>Order Confirmation</h3>
+                    <table>
+                        <tr>
+                            <td>Student Name:</td>
+                            <td><%= order.studentname %></td>
+                        </tr>
+                        <tr>
+                            <td>Student ID:</td>
+                            <td><%= order.studentid %></td>
+                        </tr>
+                        <tr>
+                            <td>Mango Juice Quantity:</td>
+                            <td><%= order.mjuice %> units</td>
+                        </tr>
+                        <tr>
+                            <td>Berry Juice Quantity:</td>
+                            <td><%= order.bjuice %> units</td>
+                        </tr>
+                        <tr>
+                            <td>Apple Juice Quantity:</td>
+                            <td><%= order.ajuice %> units</td>
+                        </tr>
+                        <tr>
+                            <td>Subtotal:</td>
+                            <td>$<%= order.subtotal %></td>
+                        </tr>
+                        <tr>
+                            <td>Tax (13%):</td>
+                            <td>$<%= order.tax %></td>
+                        </tr>
+                        <tr>
+                            <td>Total Cost:</td>
+                            <td>$<%= order.total %></td>
+                        </tr>
+                    </table>
+                </div>
+            <% } %>
+        <% } %>
+   
+    
+</body>
+</html>

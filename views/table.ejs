@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Login</h1>
+    </header>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Serial No</th>
+                    <th>Student Name</th>
+                    <th>Student Number</th>
+                    <th>Mango Qty</th>
+                    <th>Berry Qty</th>
+                    <th>Apple Qty</th>
+                    <th>Subtotal</th>
+                    <th>Tax</th>
+                    <th>Total Cost</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Insert dynamic rows here -->
+                <% for (let i = 0; i < orders.length; i++) { %>
+                    <tr>
+                        <td><%= i + 1 %></td>
+                        <td><%= orders[i].studentName %></td>
+                        <td><%= orders[i].studentNumber %></td>
+                        <td><%= orders[i].mangoQty %></td>
+                        <td><%= orders[i].berryQty %></td>
+                        <td><%= orders[i].appleQty %></td>
+                        <td><%= orders[i].subtotal %></td>
+                        <td><%= orders[i].tax %></td>
+                        <td><%= orders[i].totalCost %></td>
+                        <td><a href="/delete/<%=orders[i]._id %>" >Delete</button></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
